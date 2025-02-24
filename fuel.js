@@ -1,3 +1,12 @@
+fetch('https://yourgithubusername.github.io/repository-name/styles.css')
+  .then(response => response.text())
+  .then(css => {
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+  })
+  .catch(error => console.error('Error loading CSS:', error));
+
 document.querySelector('.geofs-ui-top').innerHTML = `
 
    <div class="geofs-fuel-pad">FUEL MASTER</div>
