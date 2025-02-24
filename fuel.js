@@ -9,7 +9,7 @@ fetch('https://raw.githubusercontent.com/Pilot-8055/Fuel-Master/refs/heads/main/
 
 document.querySelector('.geofs-ui-top').innerHTML = `
 
-   <div class="geofs-fuel-pad">FUEL MASTER</div>
+   FUEL MASTER
 
    <div class="control-pad geofs-control-status" title="Mouse controls on hold, press [M] to enable.">
                 <div class="control-pad-label orange-pad">MOUSE OFF</div>
