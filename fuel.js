@@ -1,6 +1,6 @@
 document.querySelector('.geofs-ui-top').innerHTML = `
 
-   <div <div class="geofs-autopilot-bar">
+   <div class="geofs-autopilot-bar">
                 <div class="control-pad geofs-autopilot-pad" title="Toggle autopilot on/off">
                     <div class="control-pad-label transp-pad">FUEL MASTER</div>
                 </div>
