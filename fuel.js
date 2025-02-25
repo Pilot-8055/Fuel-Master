@@ -7,7 +7,7 @@ fetch('https://raw.githubusercontent.com/Pilot-8055/Fuel-Master/refs/heads/main/
   })
   .catch(error => console.error('Error loading CSS:', error));
 
-document.querySelector('.geofs-ui-right').innerHTML = `
+document.querySelector('.geofs-ui-bottom').innerHTML = `
 
 
         <!-- Mobile Options button-->
