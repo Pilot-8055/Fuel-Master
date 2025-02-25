@@ -5,7 +5,7 @@
     let button = document.createElement('button');
     button.id = 'geofs-addon-button';
     button.className = 'mdl-button mdl-js-button geofs-f-standard-ui';
-    button.innerText = 'Addon';
+    button.innerText = 'FUEL MASTER';
     button.style.marginLeft = '10px';
     button.onclick = toggleAddonUI;
     
