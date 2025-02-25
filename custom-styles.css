@@ -1,9 +1,14 @@
 .geofs-fuel-pad {
-    width: 150px;
-    margin: 0px 10px;
-    border: 1px solid #888;
-    background-color: #000;
-    box-shadow: 0px 0px 5px #000;
-    border-radius: 15px;
-    cursor: pointer !important;
-    pointer-events: all;
+    background-size: 50px 45px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    left: 0px;
+    bottom: 0px;
+    z-index: 60;
+    background-position: 0px 0px;
+    width: 50px;
+    height: 45px;
+    transform-origin: 0px 45px;
+    opacity: 1;
+    transform: rotate(0deg);
+}
