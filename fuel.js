@@ -98,7 +98,7 @@
     // Update aircraft info periodically
     function updateAircraftInfo() {
         if (geofs.aircraft && geofs.aircraft.instance) {
-            document.getElementById('aircraft-info').innerText = 'Aircraft: ' + geofs.aircraft.instance.name;
+            document.getElementById('aircraft-info').innerText = 'Aircraft: ' + (geofs.aircraft.instance.aircraftName || 'Unknown');
             document.getElementById('flight-status').innerText = 'Status: ' + (geofs.aircraft.instance.isOnGround ? 'On Ground' : 'Flying');
         }
     }
