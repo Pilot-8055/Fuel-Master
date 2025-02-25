@@ -1,13 +1,22 @@
 (function() {
     function createUI() {
+        console.log("GeoFS Addon: Initializing...");
+
+        // Wait for the GeoFS UI to load
         let bottomUI = document.querySelector(".geofs-ui-bottom");
         if (!bottomUI) {
+            console.log("GeoFS Addon: Waiting for UI...");
             setTimeout(createUI, 500);
             return;
         }
 
-        // Prevent duplicate UI
-        if (document.getElementById("myAddonButton")) return;
+        console.log("GeoFS Addon: UI Found, Injecting Addon...");
+
+        // Prevent duplicate UI creation
+        if (document.getElementById("myAddonButton")) {
+            console.log("GeoFS Addon: Already loaded. Skipping re-injection.");
+            return;
+        }
 
         let uiVisible = false; // UI toggle state
 
@@ -23,6 +32,8 @@
         myButton.style.background = "rgba(0, 0, 0, 0.6)";
         myButton.style.color = "white";
         myButton.style.borderRadius = "5px";
+
+        console.log("GeoFS Addon: Button Created.");
 
         // Create the main UI container
         let uiBox = document.createElement("div");
@@ -41,130 +52,50 @@
         uiBox.style.display = "none"; // Initially hidden
         uiBox.style.zIndex = "1000";
 
-        // Create tab navigation
-        let tabsContainer = document.createElement("div");
-        tabsContainer.style.display = "flex";
-        tabsContainer.style.justifyContent = "space-around";
-        tabsContainer.style.borderBottom = "1px solid white";
-        tabsContainer.style.paddingBottom = "5px";
+        console.log("GeoFS Addon: UI Box Created.");
 
-        let tabs = ["Main", "Details", "Settings"];
-        let tabContents = {};
+        // Create the label and input field
+        let label = document.createElement("label");
+        label.innerText = "Enter a value:";
+        uiBox.appendChild(label);
 
-        tabs.forEach((tabName, index) => {
-            let tab = document.createElement("button");
-            tab.innerText = tabName;
-            tab.style.flex = "1";
-            tab.style.padding = "10px";
-            tab.style.background = index === 0 ? "white" : "transparent";
-            tab.style.color = index === 0 ? "black" : "white";
-            tab.style.border = "none";
-            tab.style.cursor = "pointer";
-            tab.style.outline = "none";
+        let input = document.createElement("input");
+        input.type = "text";
+        input.style.width = "100%";
+        input.style.margin = "10px 0";
+        input.style.padding = "5px";
+        input.onkeydown = function(event) {
+            event.stopPropagation(); // Prevent game shortcuts
+        };
+        uiBox.appendChild(input);
 
-            tab.onclick = function() {
-                Object.values(tabContents).forEach(tabContent => {
-                    tabContent.style.display = "none";
-                });
+        let submitButton = document.createElement("button");
+        submitButton.innerText = "Submit";
+        submitButton.style.width = "100%";
+        submitButton.style.padding = "8px";
+        submitButton.style.background = "white";
+        submitButton.style.color = "black";
+        submitButton.style.border = "none";
+        submitButton.style.cursor = "pointer";
+        submitButton.onclick = function() {
+            alert("You entered: " + input.value);
+        };
+        uiBox.appendChild(submitButton);
 
-                tabContents[tabName].style.display = "block";
+        console.log("GeoFS Addon: Input and Submit Button Added.");
 
-                tabsContainer.querySelectorAll("button").forEach(btn => {
-                    btn.style.background = "transparent";
-                    btn.style.color = "white";
-                });
-                tab.style.background = "white";
-                tab.style.color = "black";
-            };
-
-            tabsContainer.appendChild(tab);
-        });
-
-        uiBox.appendChild(tabsContainer);
-
-        // Create tab content areas
-        tabs.forEach((tabName, index) => {
-            let tabContent = document.createElement("div");
-            tabContent.style.display = index === 0 ? "block" : "none";
-            tabContent.style.padding = "10px";
-
-            if (tabName === "Main") {
-                let label = document.createElement("label");
-                label.innerText = "Enter a value:";
-                tabContent.appendChild(label);
-
-                let input = document.createElement("input");
-                input.type = "text";
-                input.style.width = "100%";
-                input.style.margin = "10px 0";
-                input.style.padding = "5px";
-                input.onkeydown = function(event) {
-                    event.stopPropagation(); // Prevent game shortcuts
-                };
-                tabContent.appendChild(input);
-
-                let submitButton = document.createElement("button");
-                submitButton.innerText = "Submit";
-                submitButton.style.width = "100%";
-                submitButton.style.padding = "8px";
-                submitButton.style.background = "white";
-                submitButton.style.color = "black";
-                submitButton.style.border = "none";
-                submitButton.style.cursor = "pointer";
-                submitButton.onclick = function() {
-                    alert("You entered: " + input.value);
-                };
-                tabContent.appendChild(submitButton);
-            } else if (tabName === "Details") {
-                let aircraftInfo = document.createElement("p");
-                aircraftInfo.innerText = "Selected Aircraft: Loading...";
-                aircraftInfo.id = "aircraftInfo";
-                tabContent.appendChild(aircraftInfo);
-
-                let flightStatus = document.createElement("p");
-                flightStatus.innerText = "Flight Status: Loading...";
-                flightStatus.id = "flightStatus";
-                tabContent.appendChild(flightStatus);
-            }
-
-            uiBox.appendChild(tabContent);
-            tabContents[tabName] = tabContent;
-        });
-
-        function updateFlightDetails() {
-            let aircraftInfo = document.getElementById("aircraftInfo");
-            let flightStatus = document.getElementById("flightStatus");
-
-            if (geofs.aircraft && geofs.aircraft.instance) {
-                aircraftInfo.innerText = "Selected Aircraft: " + geofs.aircraft.instance.name;
-                flightStatus.innerText = "Flight Status: " + (geofs.aircraft.instance.isOnGround ? "On Ground" : "Flying");
-            }
-
-            setTimeout(updateFlightDetails, 1000);
-        }
-
-        updateFlightDetails();
-
-        document.addEventListener("click", function(event) {
-            if (uiVisible && !uiBox.contains(event.target) && event.target !== myButton) {
-                uiBox.style.display = "none";
-                uiVisible = false;
-            }
-        });
-
+        // Function to toggle UI
         myButton.onclick = function() {
             uiVisible = !uiVisible;
             uiBox.style.display = uiVisible ? "block" : "none";
+            console.log("GeoFS Addon: UI " + (uiVisible ? "Opened" : "Closed"));
         };
 
-        document.addEventListener("keydown", function(event) {
-            if (uiVisible && document.activeElement.tagName === "INPUT") {
-                event.stopPropagation();
-            }
-        });
-
+        // Append UI to the document
         bottomUI.appendChild(myButton);
         document.body.appendChild(uiBox);
+
+        console.log("GeoFS Addon: UI Successfully Injected!");
     }
 
     createUI();
