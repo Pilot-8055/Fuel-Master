@@ -1,15 +1,19 @@
 (function() {
-    // Wait for the UI to be ready
     function addButton() {
-        let bottomUI = document.getElementById("geofs-ui-bottom"); // GeoFS bottom UI container
+        let bottomUI = document.querySelector(".geofs-ui-bottom"); // Select the bottom UI container
         if (!bottomUI) {
             setTimeout(addButton, 500);
             return;
         }
 
+        // Prevent adding multiple buttons
+        if (document.getElementById("myAddonButton")) return;
+
         // Create the button
         let myButton = document.createElement("button");
+        myButton.id = "myAddonButton";
         myButton.innerText = "My Addon";
+        myButton.className = "mdl-button mdl-js-button"; // Match GeoFS button style
         myButton.style.padding = "8px";
         myButton.style.margin = "5px";
         myButton.style.cursor = "pointer";
@@ -18,7 +22,7 @@
         myButton.style.color = "white";
         myButton.style.borderRadius = "5px";
 
-        // Add functionality when clicked
+        // Add click event
         myButton.onclick = function() {
             alert("Addon button clicked!"); // Replace with your function
         };
