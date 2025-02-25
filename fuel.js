@@ -18,8 +18,8 @@
     addonUI.style.top = '50%';
     addonUI.style.left = '50%';
     addonUI.style.transform = 'translate(-50%, -50%)';
-    addonUI.style.width = '400px';
-    addonUI.style.height = '300px';
+    addonUI.style.width = '500px';
+    addonUI.style.height = '400px';
     addonUI.style.background = 'rgba(0, 0, 0, 0.8)';
     addonUI.style.color = 'white';
     addonUI.style.padding = '10px';
@@ -32,13 +32,18 @@
     tabsContainer.style.display = 'flex';
     tabsContainer.style.justifyContent = 'space-around';
     
-    let infoTab = document.createElement('button');
-    infoTab.innerText = 'Info';
-    infoTab.onclick = () => showTab('info');
+    function createTabButton(name) {
+        let tabButton = document.createElement('button');
+        tabButton.innerText = name;
+        tabButton.style.padding = '10px';
+        tabButton.style.margin = '5px';
+        tabButton.style.cursor = 'pointer';
+        tabButton.onclick = () => showTab(name.toLowerCase());
+        return tabButton;
+    }
     
-    let settingsTab = document.createElement('button');
-    settingsTab.innerText = 'Settings';
-    settingsTab.onclick = () => showTab('settings');
+    let infoTab = createTabButton('Info');
+    let settingsTab = createTabButton('Settings');
     
     tabsContainer.appendChild(infoTab);
     tabsContainer.appendChild(settingsTab);
@@ -47,7 +52,6 @@
     // Create tab contents
     let infoContent = document.createElement('div');
     infoContent.id = 'info-tab';
-    infoContent.style.display = 'none';
     
     let aircraftInfo = document.createElement('p');
     aircraftInfo.id = 'aircraft-info';
@@ -70,7 +74,12 @@
     document.body.appendChild(addonUI);
     
     function toggleAddonUI() {
-        addonUI.style.display = addonUI.style.display === 'none' ? 'block' : 'none';
+        if (addonUI.style.display === 'none') {
+            addonUI.style.display = 'block';
+            showTab('info'); // Show Info tab by default when opening
+        } else {
+            addonUI.style.display = 'none';
+        }
     }
     
     function showTab(tab) {
