@@ -1,7 +1,9 @@
 (function() {
     function addButton() {
         let optionsButton = document.querySelector('.geofs-ui-bottom button[data-toggle-panel=".geofs-preference-list"]'); // Select the "Options" button
-        if (!optionsButton) {
+        let navButton = document.querySelector('.geofs-ui-bottom button[data-toggle-panel=".geofs-map-list"]'); // Select the "Nav" button
+
+        if (!optionsButton || !navButton) {
             setTimeout(addButton, 500);
             return;
         }
@@ -24,7 +26,7 @@
             alert("Addon button clicked!");
         };
 
-        optionsButton.parentNode.insertBefore(myButton, optionsButton.nextSibling);
+        optionsButton.parentNode.insertBefore(myButton, navButton);
     }
 
     addButton();
