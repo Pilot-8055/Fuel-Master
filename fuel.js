@@ -1,4 +1,4 @@
-fetch('https://raw.githubusercontent.com/Pilot-8055/Fuel-Master/refs/heads/main/custom-styles.css')
+fetch('https://raw.githubusercontent.com/Pilot-8055/Fuel-Master/refs/heads/main/custom-syles.cs')
   .then(response => response.text())
   .then(css => {
     const style = document.createElement('style');
