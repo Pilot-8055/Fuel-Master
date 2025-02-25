@@ -6,13 +6,12 @@
             return;
         }
 
-        // Prevent duplicate UI elements
+        // Prevent duplicate UI
         if (document.getElementById("myAddonButton")) return;
 
-        // Toggle state variable
-        let uiVisible = false;
+        let uiVisible = false; // UI toggle state
 
-        // Create the main toggle button
+        // Create the toggle button
         let myButton = document.createElement("button");
         myButton.id = "myAddonButton";
         myButton.innerText = "Toggle UI";
@@ -39,7 +38,7 @@
         uiBox.style.padding = "15px";
         uiBox.style.border = "2px solid white";
         uiBox.style.borderRadius = "8px";
-        uiBox.style.display = "none"; // Hidden by default
+        uiBox.style.display = "none"; // Initially hidden
         uiBox.style.zIndex = "1000";
 
         // Create tab navigation
@@ -64,15 +63,12 @@
             tab.style.outline = "none";
 
             tab.onclick = function() {
-                // Hide all tab contents
                 Object.values(tabContents).forEach(tabContent => {
                     tabContent.style.display = "none";
                 });
 
-                // Show selected tab content
                 tabContents[tabName].style.display = "block";
 
-                // Update tab button styles
                 tabsContainer.querySelectorAll("button").forEach(btn => {
                     btn.style.background = "transparent";
                     btn.style.color = "white";
@@ -92,7 +88,6 @@
             tabContent.style.display = index === 0 ? "block" : "none";
             tabContent.style.padding = "10px";
 
-            // Add elements based on tab
             if (tabName === "Main") {
                 let label = document.createElement("label");
                 label.innerText = "Enter a value:";
@@ -136,7 +131,6 @@
             tabContents[tabName] = tabContent;
         });
 
-        // Function to update aircraft info and flight status
         function updateFlightDetails() {
             let aircraftInfo = document.getElementById("aircraftInfo");
             let flightStatus = document.getElementById("flightStatus");
@@ -146,12 +140,11 @@
                 flightStatus.innerText = "Flight Status: " + (geofs.aircraft.instance.isOnGround ? "On Ground" : "Flying");
             }
 
-            setTimeout(updateFlightDetails, 1000); // Update every second
+            setTimeout(updateFlightDetails, 1000);
         }
 
-        updateFlightDetails(); // Start updating details
+        updateFlightDetails();
 
-        // Close UI when clicking outside of it
         document.addEventListener("click", function(event) {
             if (uiVisible && !uiBox.contains(event.target) && event.target !== myButton) {
                 uiBox.style.display = "none";
@@ -159,20 +152,17 @@
             }
         });
 
-        // Toggle button function
         myButton.onclick = function() {
             uiVisible = !uiVisible;
             uiBox.style.display = uiVisible ? "block" : "none";
         };
 
-        // Prevent keyboard shortcuts while typing
         document.addEventListener("keydown", function(event) {
             if (uiVisible && document.activeElement.tagName === "INPUT") {
                 event.stopPropagation();
             }
         });
 
-        // Append elements
         bottomUI.appendChild(myButton);
         document.body.appendChild(uiBox);
     }
