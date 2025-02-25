@@ -9,10 +9,10 @@
         // Prevent adding multiple elements
         if (document.getElementById("myAddonButton")) return;
 
-        // Create the main button to open the UI box
+        // Create the main button to toggle the UI box
         let myButton = document.createElement("button");
         myButton.id = "myAddonButton";
-        myButton.innerText = "Open UI";
+        myButton.innerText = "Toggle UI";
         myButton.className = "mdl-button mdl-js-button";
         myButton.style.padding = "8px";
         myButton.style.margin = "5px";
@@ -68,26 +68,9 @@
 
         uiBox.appendChild(submitButton);
 
-        // Add a close button
-        let closeButton = document.createElement("button");
-        closeButton.innerText = "Close";
-        closeButton.style.width = "100%";
-        closeButton.style.marginTop = "5px";
-        closeButton.style.padding = "8px";
-        closeButton.style.background = "red";
-        closeButton.style.color = "white";
-        closeButton.style.border = "none";
-        closeButton.style.cursor = "pointer";
-
-        closeButton.onclick = function() {
-            uiBox.style.display = "none";
-        };
-
-        uiBox.appendChild(closeButton);
-
-        // Add click event to open the UI box
+        // Add toggle functionality
         myButton.onclick = function() {
-            uiBox.style.display = "block";
+            uiBox.style.display = (uiBox.style.display === "none") ? "block" : "none";
         };
 
         // Append elements to the document
