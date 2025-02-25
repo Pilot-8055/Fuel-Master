@@ -18,14 +18,15 @@
     addonUI.style.top = '50%';
     addonUI.style.left = '50%';
     addonUI.style.transform = 'translate(-50%, -50%)';
-    addonUI.style.width = '500px';
-    addonUI.style.height = '400px';
-    addonUI.style.background = 'rgba(0, 0, 0, 0.8)';
+    addonUI.style.width = '700px';
+    addonUI.style.height = '500px';
+    addonUI.style.background = 'rgba(0, 0, 0, 0.9)';
     addonUI.style.color = 'white';
-    addonUI.style.padding = '10px';
-    addonUI.style.borderRadius = '10px';
+    addonUI.style.padding = '20px';
+    addonUI.style.borderRadius = '15px';
     addonUI.style.display = 'none';
     addonUI.style.zIndex = '1000';
+    addonUI.style.boxShadow = '0 4px 8px rgba(255, 255, 255, 0.2)';
     
     // Create tab buttons
     let tabsContainer = document.createElement('div');
@@ -38,6 +39,12 @@
         tabButton.style.padding = '10px';
         tabButton.style.margin = '5px';
         tabButton.style.cursor = 'pointer';
+        tabButton.style.background = '#555';
+        tabButton.style.color = 'white';
+        tabButton.style.border = 'none';
+        tabButton.style.borderRadius = '5px';
+        tabButton.onmouseover = () => tabButton.style.background = '#777';
+        tabButton.onmouseout = () => tabButton.style.background = '#555';
         tabButton.onclick = () => showTab(name.toLowerCase());
         return tabButton;
     }
@@ -71,6 +78,26 @@
     
     addonUI.appendChild(infoContent);
     addonUI.appendChild(settingsContent);
+    
+    // Create Remove Addon Button
+    let removeButton = document.createElement('button');
+    removeButton.innerText = 'Remove Addon';
+    removeButton.style.position = 'absolute';
+    removeButton.style.bottom = '10px';
+    removeButton.style.right = '10px';
+    removeButton.style.padding = '10px';
+    removeButton.style.cursor = 'pointer';
+    removeButton.style.background = 'red';
+    removeButton.style.color = 'white';
+    removeButton.style.border = 'none';
+    removeButton.style.borderRadius = '5px';
+    removeButton.onclick = function() {
+        document.getElementById('geofs-addon-button')?.remove();
+        document.getElementById('geofs-addon-ui')?.remove();
+        clearInterval(updateInterval);
+    };
+    addonUI.appendChild(removeButton);
+    
     document.body.appendChild(addonUI);
     
     function toggleAddonUI() {
@@ -97,10 +124,18 @@
     
     // Update aircraft info periodically
     function updateAircraftInfo() {
-        if (geofs.aircraft && geofs.aircraft.instance) {
-            document.getElementById('aircraft-info').innerText = 'Aircraft: ' + (geofs.aircraft.instance.aircraftName || 'Unknown');
-            document.getElementById('flight-status').innerText = 'Status: ' + (geofs.aircraft.instance.isOnGround ? 'On Ground' : 'Flying');
-        }
+        let aircraftInfoElem = document.getElementById('aircraft-info');
+        let flightStatusElem = document.getElementById('flight-status');
+        
+        if (!aircraftInfoElem || !flightStatusElem) return;
+        
+        let aircraftName = geofs?.aircraft?.instance?.aircraftRecord?.name || geofs?.aircraft?.instance?.definition?.name || `ID: ${geofs?.aircraft?.instance?.id || 'Unknown Model'}`;
+        let isOnGround = geofs.aircraft.instance.isOnGround || geofs.aircraft.instance.groundContact || geofs.aircraft.instance.rigidBody?.isOnGround || false;
+
+        
+        aircraftInfoElem.innerText = 'Aircraft: ' + aircraftName;
+        flightStatusElem.innerText = 'Status: ' + (isOnGround ? 'On Ground' : 'Flying');
     }
-    setInterval(updateAircraftInfo, 1000);
+    let updateInterval = setInterval(updateAircraftInfo, 1000);
+    
 })();
