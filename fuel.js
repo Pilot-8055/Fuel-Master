@@ -1,7 +1,7 @@
 (function() {
     function addButton() {
-        let bottomUI = document.querySelector(".geofs-ui-bottom"); // Select the bottom UI container
-        if (!bottomUI) {
+        let navButton = document.querySelector('.geofs-ui-bottom button[data-toggle-panel=".geofs-map-list"]'); // Select the "Nav" button
+        if (!navButton) {
             setTimeout(addButton, 500);
             return;
         }
@@ -15,7 +15,7 @@
         myButton.innerText = "My Addon";
         myButton.className = "mdl-button mdl-js-button"; // Match GeoFS button style
         myButton.style.padding = "8px";
-        myButton.style.margin = "5px";
+        myButton.style.marginLeft = "5px";
         myButton.style.cursor = "pointer";
         myButton.style.border = "1px solid white";
         myButton.style.background = "rgba(0, 0, 0, 0.6)";
@@ -27,8 +27,8 @@
             alert("Addon button clicked!"); // Replace with your function
         };
 
-        // Append the button to the bottom UI
-        bottomUI.appendChild(myButton);
+        // Insert the button right after the Nav button
+        navButton.parentNode.insertBefore(myButton, navButton.nextSibling);
     }
 
     addButton();
