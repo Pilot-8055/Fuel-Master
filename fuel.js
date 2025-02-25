@@ -9,37 +9,37 @@ fetch('https://raw.githubusercontent.com/Pilot-8055/Fuel-Master/refs/heads/main/
 
 document.querySelector('.geofs-ui-top').innerHTML = `
 
-   <div class="control-pad geofs-control-status" title="Mouse controls on hold, press [M] to enable.">
-                <div class="control-pad-label orange-pad">MOUSE OFF</div>
-            </div>
+<!-- Wind Indicator-->
+            <div class="geofs-wind-container"></div>
 
-            <div class="geofs-autopilot-bar">
-                <div class="control-pad geofs-autopilot-pad" title="Toggle autopilot on/off">
-                    <div class="control-pad-label transp-pad">AUTOPILOT</div>
+            <!-- Radio box -->
+            <div class="geofs-radio-controls">
+                <div class="geofs-radio-control geofs-nav-frequency">
+                    <span class="geofs-radio-label">
+                        <button class="geofs-radio-select on" name="NAV1MODE" onclick="geofs.nav.setNAVMode('NAV', 'NAV1');">NAV</button>
+                        <button class="geofs-radio-select" name="GPSMODE" onclick="geofs.nav.setNAVMode('GPS', 'GPS');">GPS</button>
+                    </span>
+                    <input class="geofs-radio-display" name="NAVFrequency"><button class="geofs-radio-ident" data-unit="NAV1">ident</button>
                 </div>
-                <div class="geofs-autopilot-controls">
-                    <div class="geofs-autopilot-control">
-                        <a class="numberDown">-</a><input class="geofs-autopilot-speed geofs-autopilot-mach" min="0" step="0.01" decimals="2" data-method="setSpeed" maxlength="5" value="0"/><input class="numberValue geofs-autopilot-speed geofs-autopilot-knots" min="0" smallstep="5" stepthreshold="100" step="10" data-method="setSpeed" maxlength="4" value="0"/><a class="numberUp">+</a>
-                        <span class="geofs-autopilot-switch geofs-speed-mode">
-                            <a class="switchLeft green-pad" data-method="setSpeedMode" value="knots">KTS</a><a class="switchRight" data-method="setSpeedMode" value="mach">M.</a>
-                        </span>
-                    </div>
-                    <div class="geofs-autopilot-control">
-                        <a class="numberDown">-</a><input class="numberValue geofs-autopilot-course" min="0" max="359" data-loop="true" step="1" data-method="setCourse" maxlength="3" value="000"/><a class="numberUp">+</a>
-                        <span class="geofs-autopilot-switch geofs-autopilot-mode">
-                            <a class="switchLeft geofs-autopilot-HDG green-pad" data-method="setMode" value="HDG">HDG</a><a class="switchRight geofs-autopilot-NAV" data-method="setMode" value="NAV">NAV</a>
-                        </span>
-                    </div>
-                    <div class="geofs-autopilot-control">
-                        <a class="numberDown">-</a><input class="numberValue geofs-autopilot-altitude" min="0" max="100000" smallstep="100" stepthreshold="3000" step="500" data-method="setAltitude" maxlength="5" value="00000"/><a class="numberUp">+</a>
-                        <span>ALTITUDE</span>
-                    </div>
-                    <div class="geofs-autopilot-control">
-                        <a class="numberDown">-</a><input class="numberValue geofs-autopilot-verticalSpeed" min="-6000" max="6000" step="100" data-method="setVerticalSpeed" maxlength="5" value="00000"/><a class="numberUp">+</a>
-                        <span>VERT SPEED</span>
-                    </div>
+                <div class="geofs-radio-control geofs-radio-OBS">
+                    <span class="geofs-radio-label">OBS</span><input class="geofs-radio-display" name="radioOBS">
+                </div>
+                <div class="geofs-radio-control">
+                    <span class="geofs-radio-label">DME</span><input class="geofs-radio-display" name="dme"><span class="geofs-radio-unit">NM</span>
+                    <input class="geofs-radio-display" name="groundSpeed"><span class="geofs-radio-unit">KTS</span>
+                    <input class="geofs-radio-display" name="timeToStation"><span class="geofs-radio-unit">MIN</span>
+                </div>
+                <div class="geofs-radio-control geofs-adf-frequency">
+                    <span class="geofs-radio-label">ADF</span><input class="geofs-radio-display" name="ADFFrequency"><button class="geofs-radio-ident" data-unit="ADF">ident</button>
                 </div>
             </div>
+            <div class="control-pad geofs-radio-pad" title="Open radio navigation controls">
+                <div class="control-pad-label transp-pad">RADIO</div>
+            </div>
 
-   <div class="geofs-fuel-pad">FUEL MASTER</div>
+            <!-- Fuel Master Controls -->
+            <div class="geofs-fuel-pad">FUEL MASTER</div>
+
+            <!-- Control Pads -->
+            <div class="geofs-pads-container"></div>
 `;
