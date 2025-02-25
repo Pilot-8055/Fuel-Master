@@ -7,7 +7,7 @@ fetch('https://raw.githubusercontent.com/Pilot-8055/Fuel-Master/refs/heads/main/
   })
   .catch(error => console.error('Error loading CSS:', error));
 
-document.querySelector('.geofs-ui-top').innerHTML = `
+document.querySelector('.geofs-ui-right').innerHTML = `
 
 <!-- Wind Indicator-->
             <div class="geofs-wind-container"></div>
