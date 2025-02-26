@@ -23,8 +23,9 @@
             <p id="aircraft-details">Aircraft: Unknown</p>
             <p id="flight-status">Status: Unknown</p>
         </div>
-        <div id="debug-tab" style="display: none;">debug will go here</div></div>
-        <button id="remove-addon-btn" style="position: absolute; bottom: 10px; right: 10px; padding: 10px; cursor: pointer; background: red; color: white; border: none; border-radius: 5px;">Remove Addon</button>
+        <div id="debug-tab" style="display: none;">debug will go here
+            <button id="remove-addon-btn" style="position: absolute; bottom: 10px; right: 10px; padding: 10px; cursor: pointer; background: red; color: white; border: none; border-radius: 5px;">Remove Addon</button>
+        </div></div>
     `;
     addonUI.style = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 500px; background: rgba(255, 255, 255, 0.9); color: black; padding: 0; border-radius: 15px; display: none; z-index: 1000; box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);";
     document.body.appendChild(addonUI);
