@@ -49,6 +49,7 @@
         
         <div id="refuel-tab" style="display: none;">
             <h3>Refuel</h3>
+	    <div style="height:100px; margin-bottom: 20px; width: 98%; background-color: #ddd; border: 5px solid #ccc; border-radius: 100px;"><img id="aircraft-image2" align="right" style="margin-right: 80px; padding: 5px; width: auto; height: 92px; max-height: 92px; border-radius: 10px;"><h4 id="aircraft-name2" style="padding: 12px; margin-left: 40px;"></h4></div>
             <h6>Current Fuel: <span id="current-fuel">0</span> kg</h6>
             <h6>Add Fuel (kg): <input type="number" id="add-fuel" style="width: 80px;"></h6>
             <button id="refuel-btn">Refuel</button>
@@ -166,8 +167,10 @@
         let details = aircraftData[aircraftName] || { maxFuel: "N/A", image: imagePlaceholder };
         document.getElementById('aircraft-name').innerText = aircraftName;
 	document.getElementById('aircraft-name1').innerText = aircraftName;
+	document.getElementById('aircraft-name2').innerText = aircraftName;
         document.getElementById('aircraft-image').src = details.image;
 	document.getElementById('aircraft-image1').src = details.image;
+	document.getElementById('aircraft-image2').src = details.image;
         
         let fuelSectionElem = document.getElementById('fuel-section');
         if (aircraftData[aircraftName]) {
@@ -179,6 +182,7 @@
             fuelSectionElem.style.display = "none";
             document.getElementById('aircraft-name').innerText = 'Aircraft Type not Supported';
 	    document.getElementById('aircraft-name1').innerText = 'Aircraft Type not Supported';
+	    document.getElementById('aircraft-name2').innerText = 'Aircraft Type not Supported';
             maxfuel = 0;
         }
     }
