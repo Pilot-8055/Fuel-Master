@@ -6,7 +6,6 @@
     button.className = 'mdl-button mdl-js-button geofs-f-standard-ui';
     button.innerText = 'FUEL MASTER';
     button.style.marginLeft = '10px';
-    button.title = 'Toggle FUEL MASTER Addon';
     button.onclick = toggleAddonUI;
     
     document.querySelector('.geofs-ui-bottom').appendChild(button);
@@ -15,7 +14,7 @@
     let addonUI = document.createElement('div');
     addonUI.id = 'geofs-addon-ui';
     addonUI.innerHTML = `
-        <button id="close-addon-btn" style="height: 30px; width: 30px; position: absolute; top: 15px; right: 15px; padding: 5px; cursor: pointer; background: #ff5555; color: white; border: none; border-radius: 50%;">X</button>
+        <button id="close-addon-btn" style="height: 30px; width: 30px; position: absolute; top: 10px; right: 10px; padding: 5px; cursor: pointer; background: #ff5555; color: white; border: none; border-radius: 50%;">X</button>
 
         <div id="tabs-container" style="display: flex; justify-content: space-around;">
             <button id="details-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2; border-top-left-radius: 15px;">Details</button>
