@@ -72,6 +72,7 @@
     let maxFuel;
     let fuelOnBoard;
     let burnRate;
+    let throttlePercent;
 
 
     document.getElementById('details-tab-btn').onclick = () => showTab('details');
@@ -143,10 +144,10 @@
         let isOnGround = geofs.aircraft.instance.isOnGround || geofs.aircraft.instance.groundContact || geofs.aircraft.instance.rigidBody?.isOnGround || false;
         let engineData = geofs.aircraft.instance.engine;
 
-        let throttlePercent = engineData ? (engineData.rpm / 100).toFixed(2) + "%" : "Unknown";
+        throttlePercent = engineData ? (engineData.rpm / 100).toFixed(2) + "%" : "Unknown";
 
         aircraftDetailsElem.innerText = 'Aircraft: ' + aircraftName;
-        flightStatusElem.innerText = 'Status: ' + (isOnGround ? 'On Ground' : 'Flying');
+        flightStatusElem.innerText = 'Status: ' + (isOnGround ? 'On Ground' : 'Flying') + ', ' + isOnGround;
         throttleInfoElem.innerText = 'Throttle: ' + throttlePercent;
 
 
