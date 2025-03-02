@@ -14,7 +14,7 @@
     let addonUI = document.createElement('div');
     addonUI.id = 'geofs-addon-ui';
     addonUI.innerHTML = `
-        <button id="close-addon-btn" style="height: 30px; width: 30px; position: absolute; top: 10px; right: 10px; padding: 5px; cursor: pointer; background: #ff5555; color: white; border: none; border-radius: 50%;">X</button>
+        <button id="close-addon-btn" style="height: 30px; width: 30px; position: absolute; top: 0px; right: 0px; padding: 5px; cursor: pointer; background: #ff5555; color: white; border: none; border-radius: 50%;">X</button>
 
         <div id="tabs-container" style="display: flex; justify-content: space-around;">
             <button id="details-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2; border-top-left-radius: 15px;">Details</button>
@@ -68,15 +68,14 @@
     `;
     addonUI.style = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 500px; background: rgba(255, 255, 255, 0.9); color: black; padding: 0; border-radius: 15px; display: none; z-index: 1000; box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);";
     document.body.appendChild(addonUI);
-    
-
+	
+	// Initialised Global Variables
     let maxFuel;
     let fuelOnBoard;
     let burnRate;
     let throttlePercent;
     let isOnGround;
     let aircraftName;
-
 
     document.getElementById('details-tab-btn').onclick = () => showTab('details');
     document.getElementById('planner-tab-btn').onclick = () => showTab('planner');
