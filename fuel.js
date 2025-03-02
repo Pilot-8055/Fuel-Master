@@ -30,18 +30,18 @@
                 <div>
                 <img id="aircraft-image" align="right" style="width: 200px; height: auto; border-radius: 10px; padding: 40px;">
                     <h3 id="aircraft-name"></h3>
-                    <div id="fuel-section" style="display: none;">
-                        <h4>FUEL</h4>
-                        <p>Maximum Fuel Capacity: <span id="max-fuel"></span> kg</p>
-                        <p>Fuel Onboard: <span id="fuel-onboard"></span> kg</p>
-                        <p>Estimated Flight Time: <span id="flight-time"></span> minutes</p>
+                    <div id="fuel-section" style="display: none;">	
+                        <h4>FUELING DETAILS</h4>
+                        <h6>Maximum Fuel Capacity: <span id="max-fuel"></span> kg</h6>
+                        <h6>Fuel Onboard: <span id="fuel-onboard"></span> kg</h6>
+                        <h6>Estimated Flight Time: <span id="flight-time"></span> minutes</h6>
                     </div>
                 </div>
 	        </div>
 	
         <div id="planner-tab" style="display: none;">
             <h3>Fuel Planner</h3>
-	    <div style="height:100px; margin-top: 5px; margin-bottom: 20px; width: 100%; background-color: #ddd; border: 5px solid #ccc; border-radius: 100px;"><img id="aircraft-image1" align="right" style="margin-right: 80px; padding: 5px; width: 150px; height: auto; border-radius: 10px;"><h4 id="aircraft-name1" style="padding: 12px; margin-left: 40px;"></h4></div>
+	    <div style="height:100px; margin-bottom: 20px; width: 100%; background-color: #ddd; border: 5px solid #ccc; border-radius: 100px;"><img id="aircraft-image1" align="right" style="margin-right: 80px; padding: 5px; width: 150px; height: auto; border-radius: 10px;"><h4 id="aircraft-name1" style="padding: 12px; margin-left: 40px;"></h4></div>
             <h6>Enter estimated flight distance (NM): <input type="number" id="flight-distance" style="width: 80px;"></h6>
             <h6>Required Fuel: <span id="required-fuel">N/A</span> kg</h6>
             <button id="calculate-fuel-btn">Calculate</button>
@@ -49,8 +49,8 @@
         
         <div id="refuel-tab" style="display: none;">
             <h3>Refuel</h3>
-            <p>Current Fuel: <span id="current-fuel">0</span> kg</p>
-            <p>Add Fuel (kg): <input type="number" id="add-fuel" style="width: 80px;"></p>
+            <h6>Current Fuel: <span id="current-fuel">0</span> kg</h6>
+            <h6>Add Fuel (kg): <input type="number" id="add-fuel" style="width: 80px;"></h6>
             <button id="refuel-btn">Refuel</button>
         </div>
 	        <div id="instructions-tab" style="display: none;">Instructions will go here</div>
@@ -154,7 +154,7 @@
 
 
         let fuelOnboard = 0;
-        let imagePlaceholder = "https://play-lh.googleusercontent.com/JnHfsOi3qB4p9vJVji7LID2AAYkmzyA0g-9tIfTgU86o8O1ttDcwsyhy4LVLfCrwlpE";
+        let imagePlaceholder = "icon.png";
 
         let aircraftData = {
             "Boeing 777-300ER": { maxFuel: 145538, image: "https://www.geo-fs.com/images/planes/777-300.png" },
