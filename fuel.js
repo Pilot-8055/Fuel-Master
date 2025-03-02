@@ -41,9 +41,9 @@
 	
         <div id="planner-tab" style="display: none;">
             <h3>Fuel Planner</h3>
-	    <div style="height:100px; margin-top: 15px; margin-bottom: 20px; width: 100%; background-color: #ddd; border: 5px solid #ccc; border-radius: 100px;"><img id="aircraft-image1" align="right" style="margin-right: 80px; padding: 5px; width: 150px; height: auto; border-radius: 10px;"><h4 id="aircraft-name1" style="padding: 12px; margin-left: 40px;"></h4></div>
-            <p>Enter estimated flight distance (NM): <input type="number" id="flight-distance" style="width: 80px;"></p>
-            <p>Required Fuel: <span id="required-fuel">N/A</span> kg</p>
+	    <div style="height:100px; margin-top: 10px; margin-bottom: 20px; width: 100%; background-color: #ddd; border: 5px solid #ccc; border-radius: 100px;"><img id="aircraft-image1" align="right" style="margin-right: 80px; padding: 5px; width: 150px; height: auto; border-radius: 10px;"><h4 id="aircraft-name1" style="padding: 12px; margin-left: 40px;"></h4></div>
+            <h6>Enter estimated flight distance (NM): <input type="number" id="flight-distance" style="width: 80px;"></h6>
+            <h6>Required Fuel: <span id="required-fuel">N/A</span> kg</h6>
             <button id="calculate-fuel-btn">Calculate</button>
         </div>
         
