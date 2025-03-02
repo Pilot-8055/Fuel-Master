@@ -14,15 +14,16 @@
     let addonUI = document.createElement('div');
     addonUI.id = 'geofs-addon-ui';
     addonUI.innerHTML = `
-        <button id="close-addon-btn" style="height: 30px; width: 30px; position: absolute; top: 10px; right: 10px; padding: 5px; cursor: pointer; background: #ff5555; color: white; border: none; border-radius: 50%;">X</button>
+        <!-- <button id="close-addon-btn" style="height: 30px; width: 30px; position: absolute; top: 10px; right: 10px; padding: 5px; cursor: pointer; background: #ff5555; color: white; border: none; border-radius: 50%;">X</button> -->
 
         <div id="tabs-container" style="display: flex; justify-content: space-around;">
             <button id="details-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2; border-top-left-radius: 15px;">Details</button>
             <button id="planner-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">Planner</button>
             <button id="refuel-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">Refuel</button>
             <button id="instructions-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">Instructions</button>
-            <button id="more-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2; border-top-right-radius: 15px;">More</button>
-            <button id="debug-tab-btn" class="tab-button" style="display: block; width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2; border-top-right-radius: 15px;">debug mode</button>
+            <button id="more-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">More</button>
+            <button id="debug-tab-btn" class="tab-button" style="display: block; width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">debug</button>
+	    <button id="close-addon-btn" style="width: 240px; height: 50px; cursor: pointer; background: #f55; color: white; border: none; border-top-right-radius: 15px;">X</button>
         </div>
 
 	 <div style="padding: 40px;">
