@@ -14,7 +14,7 @@
     let addonUI = document.createElement('div');
     addonUI.id = 'geofs-addon-ui';
     addonUI.innerHTML = `
-        <button id="close-addon-btn" style="height: 30px; width: 30px; position: absolute; top: 5px; right: 5px; padding: 5px; cursor: pointer; background: #ff5555; color: white; border: none; border-radius: 50%;">X</button>
+        <button id="close-addon-btn" style="height: 30px; width: 30px; position: absolute; top: 10px; right: 10px; padding: 5px; cursor: pointer; background: #ff5555; color: white; border: none; border-radius: 50%;">X</button>
 
         <div id="tabs-container" style="display: flex; justify-content: space-around;">
             <button id="details-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2; border-top-left-radius: 15px;">Details</button>
@@ -41,7 +41,7 @@
 	
         <div id="planner-tab" style="display: none;">
             <h3>Fuel Planner</h3>
-	    <div style="height:100px; margin-top: 10px; margin-bottom: 20px; width: 100%; background-color: #ddd; border: 5px solid #ccc; border-radius: 100px;"><img id="aircraft-image1" align="right" style="margin-right: 80px; padding: 5px; width: 150px; height: auto; border-radius: 10px;"><h4 id="aircraft-name1" style="padding: 12px; margin-left: 40px;"></h4></div>
+	    <div style="height:100px; margin-top: 5px; margin-bottom: 20px; width: 100%; background-color: #ddd; border: 5px solid #ccc; border-radius: 100px;"><img id="aircraft-image1" align="right" style="margin-right: 80px; padding: 5px; width: 150px; height: auto; border-radius: 10px;"><h4 id="aircraft-name1" style="padding: 12px; margin-left: 40px;"></h4></div>
             <h6>Enter estimated flight distance (NM): <input type="number" id="flight-distance" style="width: 80px;"></h6>
             <h6>Required Fuel: <span id="required-fuel">N/A</span> kg</h6>
             <button id="calculate-fuel-btn">Calculate</button>
