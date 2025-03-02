@@ -41,6 +41,7 @@
 	
         <div id="planner-tab" style="display: none;">
             <h3>Fuel Planner</h3>
+	    <div style="padding:10px;width:100%;height:100px;background-color:#ddd;border:5px solid #ccc; border-radius:10px;"><img id="aircraft-image1" align="right" style="width: 60px; height: auto; border-radius: 10px; padding: 40px;"><h3 id="aircraft-name1"></h4></div>
             <p>Enter estimated flight distance (NM): <input type="number" id="flight-distance" style="width: 80px;"></p>
             <p>Required Fuel: <span id="required-fuel">N/A</span> kg</p>
             <button id="calculate-fuel-btn">Calculate</button>
@@ -73,6 +74,8 @@
     let fuelOnBoard;
     let burnRate;
     let throttlePercent;
+    let isOnGround;
+    let aircraftName;
 
 
     document.getElementById('details-tab-btn').onclick = () => showTab('details');
@@ -125,7 +128,7 @@
         let reqFuel = fuel;
         let expFuel = reqFuel + fuelOnBoard;
         if (expFuel <= maxFuel) {
-            if (expFuel <= maxFuel) {
+            if (isOnGround <= 'true') {
                  fuelOnBoard = expFuel;
             } else {
                  // Needs to land on Ground First.
@@ -140,8 +143,8 @@
         let flightStatusElem = document.getElementById('flight-status');
         let throttleInfoElem = document.getElementById('throttle-info');
 
-        let aircraftName = geofs?.aircraft?.instance?.aircraftRecord?.name || geofs?.aircraft?.instance?.definition?.name || `ID: ${geofs?.aircraft?.instance?.id || 'Unknown Model'}`;
-        let isOnGround = geofs.aircraft.instance.isOnGround || geofs.aircraft.instance.groundContact || geofs.aircraft.instance.rigidBody?.isOnGround || false;
+        aircraftName = geofs?.aircraft?.instance?.aircraftRecord?.name || geofs?.aircraft?.instance?.definition?.name || `ID: ${geofs?.aircraft?.instance?.id || 'Unknown Model'}`;
+        isOnGround = geofs.aircraft.instance.isOnGround || geofs.aircraft.instance.groundContact || geofs.aircraft.instance.rigidBody?.isOnGround || false;
         let engineData = geofs.aircraft.instance.engine;
 
         throttlePercent = engineData ? (engineData.rpm / 100).toFixed(2) + "%" : "Unknown";
