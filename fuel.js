@@ -154,7 +154,7 @@
 
 
         let fuelOnboard = 0;
-        let imagePlaceholder = "https://github.com/Pilot-8055/Fuel-Master/blob/4775cbccc0c78cf9fbbe659993170caf73e63afb/icon.png";
+        let imagePlaceholder = "https://raw.githubusercontent.com/Pilot-8055/Fuel-Master/ca5e1601f56cd953a5af7e8f59b028d40242e5f5/icon.png";
 
         let aircraftData = {
             "Boeing 777-300ER": { maxFuel: 145538, image: "https://www.geo-fs.com/images/planes/777-300.png" },
