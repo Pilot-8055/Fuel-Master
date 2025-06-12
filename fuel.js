@@ -43,7 +43,8 @@
         <div id="planner-tab" style="display: none;">
             <h3>Fuel Planner</h3>
 	    <div style="height:100px; margin-bottom: 20px; width: 98%; background-color: #ddd; border: 5px solid #ccc; border-radius: 100px;"><img id="aircraft-image1" align="right" style="margin-right: 80px; padding: 5px; width: auto; height: 92px; max-height: 92px; border-radius: 10px;"><h4 id="aircraft-name1" style="padding: 12px; margin-left: 40px;"></h4></div>
-            <h6>Enter estimated flight distance (NM): <input type="number" id="flight-distance" style="width: 80px;"></h6>
+            <h6>Enter estimated Flight Distance (NM): <input type="number" id="flight-distance" style="width: 80px;"></h6>
+            <h6>Enter approximate Cruise Speed (KTS): <input type="number" id="cruise-speed" style="width: 80px;"></h6>
             <h6>Required Fuel: <span id="required-fuel">N/A</span> kg</h6>
             <button id="calculate-fuel-btn">Calculate</button>
         </div>
@@ -64,6 +65,7 @@
 	            <p id="aircraft-details">Aircraft: Unknown</p>
 	            <p id="flight-status">Status: Unknown</p>
 	            <p id="throttle-info">Throttle: Unknown</p>
+	            <p>Burn Per Second: <span id="burnPerSec"></span> Per Sec</p>
 	        </div>
 
 	 </div>
@@ -73,11 +75,11 @@
 	
 	// Initialised Global Variables
     let maxFuel;
-    let fuelOnBoard;
     let burnRate;
     let throttlePercent;
     let isOnGround;
     let aircraftName;
+    let fuelOnBoard = 16000;             // in kg, initial planned fuel
 
     document.getElementById('details-tab-btn').onclick = () => showTab('details');
     document.getElementById('planner-tab-btn').onclick = () => showTab('planner');
@@ -85,6 +87,7 @@
     document.getElementById('instructions-tab-btn').onclick = () => showTab('instructions');
     document.getElementById('more-tab-btn').onclick = () => showTab('more');
     document.getElementById('debug-tab-btn').onclick = () => showTab('debug');
+    document.getElementById('calculate-fuel-btn').onclick = () => calculateFuel(document.getElementById('flight-distance').value, document.getElementById('cruise-speed').value, document.getElementById('burnPerSec').textContent);
     document.getElementById('remove-addon-btn').onclick = function() {
         document.getElementById('geofs-addon-button')?.remove();
         document.getElementById('geofs-addon-ui')?.remove();
@@ -121,8 +124,25 @@
         }
     }, true);
 
-    function calculateFuel() {
+    function calculateFuel(distanceNM, cruiseSpeedKTS, burnPerSec) {
+        let taxiFuel = 300;
+        let tripTimeSec = (distanceNM / cruiseSpeedKTS) * 3600;
+        let tripFuel = tripTimeSec * burnPerSec;
+
+        let contingencyFuel = 0.05 * tripFuel;
+
+        // Alternate: assume 200 NM
+        let alternateTimeSec = (200 / cruiseSpeedKTS) * 3600;
+        let alternateFuel = alternateTimeSec * burnPerSec;
+
+        // Reserve: 30 minutes at cruise
+        let reserveFuel = 1800 * burnPerSec;
+
+        let extraFuel = 1000; // user-defined or fixed
+
+        let totalFuel = taxiFuel + tripFuel + contingencyFuel + alternateFuel + reserveFuel + extraFuel;;
         
+        document.getElementById('required-fuel').innerText = totalFuel;
     }
 
     function addFuel(fuel) {
@@ -155,29 +175,29 @@
         throttleInfoElem.innerText = 'Throttle: ' + throttlePercent;
 
 
-        let fuelOnboard = 0;
         let imagePlaceholder = "https://raw.githubusercontent.com/Pilot-8055/Fuel-Master/ca5e1601f56cd953a5af7e8f59b028d40242e5f5/icon.png";
 
         let aircraftData = {
-            "Boeing 777-300ER": { maxFuel: 145538, image: "https://www.geo-fs.com/images/planes/777-300.png" },
-            "Boeing 737-700": { maxFuel: 26020, image: "https://www.geo-fs.com/images/planes/737-700.png" },
-            "Airbus A350": { maxFuel: 141000, image: "https://www.geo-fs.com/images/planes/a350.png" },
-            "Airbus A380": { maxFuel: 320000, image: "https://www.geo-fs.com/images/planes/a380.png" }
+            "Boeing 777-300ER": { maxFuel: 144800, burnPerSec: 5.1, image: "https://www.geo-fs.com/images/planes/777-300.png" },
+            "Boeing 737-700": { maxFuel: 20800, burnPerSec: 1.9, image: "https://www.geo-fs.com/images/planes/737-700.png" },
+            "Airbus A350": { maxFuel: 122800, burnPerSec: 4.5, image: "https://www.geo-fs.com/images/planes/a350.png" },
+            "Airbus A380": { maxFuel: 320000, burnPerSec: 9.6, image: "https://www.geo-fs.com/images/planes/a380.png" }
         };
 
-        let details = aircraftData[aircraftName] || { maxFuel: "N/A", image: imagePlaceholder };
+        let details = aircraftData[aircraftName] || { maxFuel: "N/A", burnPerSec: "N/A", image: imagePlaceholder };
         document.getElementById('aircraft-name').innerText = aircraftName;
-	document.getElementById('aircraft-name1').innerText = aircraftName;
-	document.getElementById('aircraft-name2').innerText = aircraftName;
+        document.getElementById('aircraft-name1').innerText = aircraftName;
+        document.getElementById('aircraft-name2').innerText = aircraftName;
         document.getElementById('aircraft-image').src = details.image;
-	document.getElementById('aircraft-image1').src = details.image;
-	document.getElementById('aircraft-image2').src = details.image;
+        document.getElementById('aircraft-image1').src = details.image;
+        document.getElementById('aircraft-image2').src = details.image;
         
         let fuelSectionElem = document.getElementById('fuel-section');
         if (aircraftData[aircraftName]) {
             fuelSectionElem.style.display = "block";
             document.getElementById('max-fuel').innerText = details.maxFuel;
-            document.getElementById('fuel-onboard').innerText = fuelOnboard.toFixed(2);
+            document.getElementById('burnPerSec').innerText = details.burnPerSec;
+            document.getElementById('fuel-onboard').innerText = fuelOnBoard.toFixed(2);
             maxFuel = details.maxFuel;
         } else {
             fuelSectionElem.style.display = "none";
