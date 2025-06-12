@@ -23,7 +23,7 @@
             <button id="instructions-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">Instructions</button>
             <button id="more-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">More</button>
             <button id="debug-tab-btn" class="tab-button" style="display: block; width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">debug</button>
-	    <button id="close-addon-btn" style="width: 240px; height: 50px; cursor: pointer; background: #f55; color: white; border: none; border-top-right-radius: 15px;">X</button>
+	    <button id="close-addon-btn" style="width: 240px; height: 50px; cursor: pointer; background: #f55; color: white; border: none; border: none; border-bottom: 7px solid #d44; border-top-right-radius: 15px;">X</button>
         </div>
 
 	 <div style="padding: 40px;">
@@ -75,11 +75,11 @@
 	
 	// Initialised Global Variables
     let maxFuel;
-    let burnRate;
     let throttlePercent;
     let isOnGround;
     let aircraftName;
-    let fuelOnBoard = 16000;             // in kg, initial planned fuel
+    let fuelOnBoard = 16000;
+    let throttleMultiplier = 1.3;
 
     document.getElementById('details-tab-btn').onclick = () => showTab('details');
     document.getElementById('planner-tab-btn').onclick = () => showTab('planner');
@@ -88,6 +88,7 @@
     document.getElementById('more-tab-btn').onclick = () => showTab('more');
     document.getElementById('debug-tab-btn').onclick = () => showTab('debug');
     document.getElementById('calculate-fuel-btn').onclick = () => calculateFuel(document.getElementById('flight-distance').value, document.getElementById('cruise-speed').value, document.getElementById('burnPerSec').textContent);
+    document.getElementById('refuel-btn').onclick = () => addFuel(document.getElementById('add-fuel').value);
     document.getElementById('remove-addon-btn').onclick = function() {
         document.getElementById('geofs-addon-button')?.remove();
         document.getElementById('geofs-addon-ui')?.remove();
@@ -125,40 +126,73 @@
     }, true);
 
     function calculateFuel(distanceNM, cruiseSpeedKTS, burnPerSec) {
-        let taxiFuel = 300;
-        let tripTimeSec = (distanceNM / cruiseSpeedKTS) * 3600;
-        let tripFuel = tripTimeSec * burnPerSec;
+    let distance = Number(distanceNM) || 0;
+    let cruiseSpd = Number(cruiseSpeedKTS) || 0;
+    let burnRate = Number(burnPerSec) || 0;
 
-        let contingencyFuel = 0.05 * tripFuel;
+    let taxiFuel = Number(300);
 
-        // Alternate: assume 200 NM
-        let alternateTimeSec = (200 / cruiseSpeedKTS) * 3600;
-        let alternateFuel = alternateTimeSec * burnPerSec;
+    let tripTimeSec = Number((distance / cruiseSpd) * 3600) || 0;
+    let tripFuel = Number(tripTimeSec * burnRate) || 0;
 
-        // Reserve: 30 minutes at cruise
-        let reserveFuel = 1800 * burnPerSec;
+    let contingencyFuel = Number(0.05 * tripFuel) || 0;
 
-        let extraFuel = 1000; // user-defined or fixed
+    let alternateTimeSec = Number((200 / cruiseSpd) * 3600) || 0;
+    let alternateFuel = Number(alternateTimeSec * burnRate) || 0;
 
-        let totalFuel = taxiFuel + tripFuel + contingencyFuel + alternateFuel + reserveFuel + extraFuel;;
-        
+    let reserveFuel = Number(1800 * burnRate) || 0;
+
+    let extraFuel = Number(1000);
+
+    let totalFuel = Number(taxiFuel + tripFuel + contingencyFuel + alternateFuel + reserveFuel + extraFuel); 
+    totalFuel = Number(totalFuel.toFixed(2));       
+
         document.getElementById('required-fuel').innerText = totalFuel;
     }
 
     function addFuel(fuel) {
-        let reqFuel = fuel;
+        reqFuel = Number(fuel) || 0;
+        fuelOnBoard = Number(fuelOnBoard) || 0;
         let expFuel = reqFuel + fuelOnBoard;
-        if (expFuel <= maxFuel) {
-            if (isOnGround <= 'true') {
+        expFuelPercent = Number(expFuel) || 0;
+        console.log(isOnGround);
+        if (expFuel < maxFuel) {
+            if (isOnGround == true) {
                  fuelOnBoard = expFuel;
+                 console.log('FUEL FILLED SUCCESSFULLY :)');
             } else {
-                 // Needs to land on Ground First.
+                 console.log('needs to land first');
             }
         } else {
-            // Fuel exceeds the Max limit.
+            console.log('fuel exceeds max limit');
 	 }
     }
     
+    let engineKillActive = false;
+
+    function startEngineKillLoop() {
+        if (engineKillActive) return; // prevent multiple kill loops
+        engineKillActive = true;
+
+        function killEngines() {
+            if (fuelOnBoard <= 0) {
+                geofs.aircraft.instance.engines.forEach(engine => {
+                    engine.rpm = 0;
+                    engine.currentThrust = 0;
+                    engine.reverseThrust = 0;
+                    engine.thrust = 0;
+                });
+                geofs.animation.values.throttle = 0;
+
+                requestAnimationFrame(killEngines); // keep looping
+            } else {
+                engineKillActive = false; // stop loop if refueled
+            }
+        }
+
+        killEngines(); // start the engine kill loop
+    }
+
     function updateAircraftDetails() {
         let aircraftDetailsElem = document.getElementById('aircraft-details');
         let flightStatusElem = document.getElementById('flight-status');
@@ -168,12 +202,11 @@
         isOnGround = geofs.aircraft.instance.isOnGround || geofs.aircraft.instance.groundContact || geofs.aircraft.instance.rigidBody?.isOnGround || false;
         let engineData = geofs.aircraft.instance.engine;
 
-        throttlePercent = engineData ? (engineData.rpm / 100).toFixed(2) + "%" : "Unknown";
+        throttlePercent = engineData ? (engineData.rpm / 100).toFixed(2) : "Unknown";
 
         aircraftDetailsElem.innerText = 'Aircraft: ' + aircraftName;
         flightStatusElem.innerText = 'Status: ' + (isOnGround ? 'On Ground' : 'Flying') + ', ' + isOnGround;
-        throttleInfoElem.innerText = 'Throttle: ' + throttlePercent;
-
+        throttleInfoElem.innerText = 'Throttle: ' + throttlePercent + "%";
 
         let imagePlaceholder = "https://raw.githubusercontent.com/Pilot-8055/Fuel-Master/ca5e1601f56cd953a5af7e8f59b028d40242e5f5/icon.png";
 
@@ -205,7 +238,23 @@
 	    document.getElementById('aircraft-name1').innerText = 'Aircraft Type not Supported';
 	    document.getElementById('aircraft-name2').innerText = 'Aircraft Type not Supported';
             maxfuel = 0;
+            fuelOnBoard = 16000;
         }
+
+        // Ensure both throttle and burnPerSec are valid numbers
+        throttlePercent = Number(throttlePercent) || 0;
+        let burnPerSec = Number(details.burnPerSec) || 0;
+
+        // Calculate fuel drained per second
+        let fuelDrained = burnPerSec * (throttlePercent / 100) * throttleMultiplier;
+
+        // Subtract from onboard fuel, keep it ≥ 0
+        fuelOnBoard = Math.max(fuelOnBoard - fuelDrained, 0);
+
+        if (fuelOnBoard <= 0 && !engineKillActive) {
+            startEngineKillLoop();
+        }
+
     }
 
     let updateInterval = setInterval(updateAircraftDetails, 1000);
