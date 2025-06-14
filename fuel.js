@@ -17,13 +17,13 @@
         <!-- <button id="close-addon-btn" style="height: 30px; width: 30px; position: absolute; top: 10px; right: 10px; padding: 5px; cursor: pointer; background: #ff5555; color: white; border: none; border-radius: 50%;">X</button> -->
 
         <div id="tabs-container" style="display: flex; justify-content: space-around;">
-            <button id="details-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2; border-top-left-radius: 15px;">Details</button>
-            <button id="planner-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">Planner</button>
-            <button id="refuel-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">Refuel</button>
-            <button id="instructions-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">Instructions</button>
-            <button id="more-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">More</button>
-            <button id="debug-tab-btn" class="tab-button" style="display: block; width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;">debug</button>
-	    <button id="close-addon-btn" style="width: 240px; height: 50px; cursor: pointer; background: #f55; color: white; border: none; border: none; border-bottom: 7px solid #d44; border-top-right-radius: 15px;">X</button>
+            <button id="details-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2; border-top-left-radius: 15px;"><span style="font-size: 16px; font-weight: 400;">Details</span></button>
+            <button id="planner-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">Planner</span></button>
+            <button id="refuel-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">Refuel</span></button>
+            <button id="instructions-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">Instructions</span></button>
+            <button id="more-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">More</span></button>
+            <button id="debug-tab-btn" class="tab-button" style="display: block; width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">debug</span></button>
+	    <button id="close-addon-btn" style="width: 240px; height: 50px; cursor: pointer; background: #f55; color: white; border: none; border: none; border-bottom: 7px solid #d44; border-top-right-radius: 15px;"><span style="font-size: 16px; font-weight: 400;">X</span></button>
         </div>
 
 	 <div style="padding: 40px;">
@@ -38,6 +38,7 @@
                         <h6>Estimated Flight Time: <span id="flight-time"></span> minutes</h6>
                     </div>
                 </div>
+                <button id="toggle-mini-box-btn" style="position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 620px; padding: 10px; cursor: pointer; background: green; color: white; border: none; border-radius: 5px;">Pin Status Bar</button>
 	        </div>
 	
         <div id="planner-tab" style="display: none;">
@@ -53,7 +54,7 @@
             <h3>Refuel</h3>
 	    <div style="height:100px; margin-bottom: 20px; width: 98%; background-color: #ddd; border: 5px solid #ccc; border-radius: 100px;"><img id="aircraft-image2" align="right" style="margin-right: 80px; padding: 5px; width: auto; height: 92px; max-height: 92px; border-radius: 10px;"><h4 id="aircraft-name2" style="padding: 12px; margin-left: 40px;"></h4></div>
             <h6>Current Fuel: <span id="current-fuel">0</span> kg</h6>
-            <h6>Add Fuel (kg): <input type="number" id="add-fuel" style="width: 80px;"></h6>
+            Add Fuel (kg): <input type="number" id="add-fuel" style="width: 80px;">
             <button id="refuel-btn">Refuel</button>
         </div>
 	        <div id="instructions-tab" style="display: none;">Instructions will go here</div>
@@ -71,6 +72,37 @@
 	 </div>
     `;
     addonUI.style = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 700px; height: 500px; background: rgba(255, 255, 255, 0.9); color: black; padding: 0; border-radius: 15px; display: none; z-index: 1000; box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);";
+
+
+    // Mini Box UI
+    let miniBox = document.createElement('div');
+    miniBox.id = 'fuel-mini-box';
+    miniBox.innerHTML = `
+        <div id="mini-box-content"><div style="display: flex;"><div style="padding: 7px 20px">
+            <span><strong>Fuel:</strong> <span id="mini-fuel-onboard">N/A</span> kg</span>
+            <span style="margin-left: 20px;"><strong>Estimated Flight Time:</strong> <span id="mini-flight-time">--</span> minutes</span>
+            </div>
+            <div style="padding: 7px 20px; background-color: #4f8; font-size: 15px; font-weight: 400; font-style: italic; border-radius: 10px;">
+                Have a Great Flight
+            </div>
+        </div></div>
+    `;
+    miniBox.style.cssText = `
+        position: fixed;
+        bottom: 42px; /* just above GeoFS bottom bar */
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.91);
+        color: black;
+        border-radius: 10px;
+        z-index: 999;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        display: none;
+        white-space: nowrap;
+    `;
+
+    document.body.appendChild(miniBox);
+
     document.body.appendChild(addonUI);
 	
 	// Initialised Global Variables
@@ -80,6 +112,20 @@
     let aircraftName;
     let fuelOnBoard = 16000;
     let throttleMultiplier = 1.3;
+    let miniBoxPinned = false;
+    let flightTime;
+
+    document.getElementById('toggle-mini-box-btn').onclick = () => {
+        miniBoxPinned = !miniBoxPinned;
+        document.getElementById('toggle-mini-box-btn').innerText = miniBoxPinned ? 'Unpin Status Bar' : 'Pin Status Bar';
+
+        // Determine if main UI is open
+        const isMainUIOpen = addonUI.style.display !== 'none';
+
+        // Show mini box if either pinned or main UI is open
+        miniBox.style.display = (miniBoxPinned || isMainUIOpen) ? 'block' : 'none';
+    };
+
 
     document.getElementById('details-tab-btn').onclick = () => showTab('details');
     document.getElementById('planner-tab-btn').onclick = () => showTab('planner');
@@ -92,13 +138,21 @@
     document.getElementById('remove-addon-btn').onclick = function() {
         document.getElementById('geofs-addon-button')?.remove();
         document.getElementById('geofs-addon-ui')?.remove();
+        document.getElementById('fuel-mini-box')?.remove();
         clearInterval(updateInterval);
     };
     document.getElementById('close-addon-btn').onclick = toggleAddonUI;
     
     function toggleAddonUI() {
         addonUI.style.display = addonUI.style.display === 'none' ? 'block' : 'none';
-        if (addonUI.style.display === 'block') showTab('details');
+        if (addonUI.style.display === 'block') {
+            showTab('details');
+        }
+    
+        // Hide mini box only if not pinned
+        if (!miniBoxPinned) {
+            miniBox.style.display = addonUI.style.display;
+        }
     }
     
     function showTab(tab) {
@@ -167,11 +221,11 @@
             console.log('fuel exceeds max limit');
 	 }
     }
-    
+
     let engineKillActive = false;
 
     function startEngineKillLoop() {
-        if (engineKillActive) return; // prevent multiple kill loops
+        if (engineKillActive) return;
         engineKillActive = true;
 
         function killEngines() {
@@ -184,13 +238,19 @@
                 });
                 geofs.animation.values.throttle = 0;
 
-                requestAnimationFrame(killEngines); // keep looping
+                requestAnimationFrame(killEngines);
             } else {
-                engineKillActive = false; // stop loop if refueled
+                // Stop forcing shutdown
+                engineKillActive = false;
+
+                console.log("Engines restored.");
+
+                // Do NOT set them to undefined — let GeoFS control them
+                // So we simply do nothing here.
             }
         }
 
-        killEngines(); // start the engine kill loop
+        killEngines();
     }
 
     function updateAircraftDetails() {
@@ -224,14 +284,38 @@
         document.getElementById('aircraft-image').src = details.image;
         document.getElementById('aircraft-image1').src = details.image;
         document.getElementById('aircraft-image2').src = details.image;
-        
+
         let fuelSectionElem = document.getElementById('fuel-section');
         if (aircraftData[aircraftName]) {
             fuelSectionElem.style.display = "block";
             document.getElementById('max-fuel').innerText = details.maxFuel;
             document.getElementById('burnPerSec').innerText = details.burnPerSec;
-            document.getElementById('fuel-onboard').innerText = fuelOnBoard.toFixed(2);
             maxFuel = details.maxFuel;
+
+        
+            // Ensure both throttle and burnPerSec are valid numbers
+            throttlePercent = Number(throttlePercent) || 0;
+            let burnPerSec = Number(details.burnPerSec) || 0;
+
+            // Calculate fuel drained per second
+            let fuelDrained = burnPerSec * (throttlePercent / 100) * throttleMultiplier;
+
+            // Subtract from onboard fuel, keep it ≥ 0
+            fuelOnBoard = Math.max(fuelOnBoard - fuelDrained, 0);
+
+            flightTime = Number(fuelOnBoard / fuelDrained / 60) || 0;
+            flightTime = flightTime.toFixed(0);
+            document.getElementById('flight-time').innerText = flightTime;
+
+            if (fuelOnBoard <= 0 && !engineKillActive) {
+                startEngineKillLoop();
+            }
+
+            document.getElementById('current-fuel').innerText = fuelOnBoard.toFixed(2);
+            document.getElementById('fuel-onboard').innerText = fuelOnBoard.toFixed(2);
+            document.getElementById('mini-fuel-onboard').innerText = fuelOnBoard.toFixed(2);
+            document.getElementById('mini-flight-time').innerText = flightTime;
+
         } else {
             fuelSectionElem.style.display = "none";
             document.getElementById('aircraft-name').innerText = 'Aircraft Type not Supported';
@@ -239,22 +323,11 @@
 	    document.getElementById('aircraft-name2').innerText = 'Aircraft Type not Supported';
             maxfuel = 0;
             fuelOnBoard = 16000;
+            document.getElementById('flight-time').innerText = 'Nul';
+            document.getElementById('fuel-onboard').innerText = fuelOnBoard;
+            document.getElementById('mini-fuel-onboard').innerText = 'Nul';
+            document.getElementById('mini-flight-time').innerText = 'Nul';
         }
-
-        // Ensure both throttle and burnPerSec are valid numbers
-        throttlePercent = Number(throttlePercent) || 0;
-        let burnPerSec = Number(details.burnPerSec) || 0;
-
-        // Calculate fuel drained per second
-        let fuelDrained = burnPerSec * (throttlePercent / 100) * throttleMultiplier;
-
-        // Subtract from onboard fuel, keep it ≥ 0
-        fuelOnBoard = Math.max(fuelOnBoard - fuelDrained, 0);
-
-        if (fuelOnBoard <= 0 && !engineKillActive) {
-            startEngineKillLoop();
-        }
-
     }
 
     let updateInterval = setInterval(updateAircraftDetails, 1000);
