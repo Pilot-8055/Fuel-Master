@@ -110,7 +110,7 @@
     let throttlePercent;
     let isOnGround;
     let aircraftName;
-    let fuelOnBoard = 12050; //16000
+    let fuelOnBoard = 100; //16000
     let throttleMultiplier = 1.3;
     let miniBoxPinned = false;
     let flightTime;
@@ -234,7 +234,6 @@
                     engine.rpm = 0;
                     engine.currentThrust = 0;
                     engine.reverseThrust = 0;
-                    engine.thrust = 0;
                 });
                 geofs.animation.values.throttle = 0;
 
@@ -328,7 +327,7 @@
 
             if (fuelOnBoard < 8000 && fuelOnBoard>= 4000) {
                 document.getElementById('status-color').style.backgroundColor = '#fc8';
-                document.getElementById('status-color').innerText = 'Fuel Very Low. Declare Emergency Landing';
+                document.getElementById('status-color').innerText = 'Fuel too Low. Prepare for Emergency Landing';
             }
 
             if (fuelOnBoard < 4000 && fuelOnBoard>= 1000) {
@@ -337,13 +336,13 @@
             }
 
             if (fuelOnBoard < 1000 && fuelOnBoard>= 10) {
-                document.getElementById('status-color').style.backgroundColor = '#f88';
-                document.getElementById('status-color').innerText = ' Fuel Finishing. Land Immediately';
+                document.getElementById('status-color').style.backgroundColor = '#f55';
+                document.getElementById('status-color').innerText = 'MAYDAY ALERT. Land Immediately';
             }
 
             if (fuelOnBoard < 10) {
-                document.getElementById('status-color').style.backgroundColor = '#888';
-                document.getElementById('status-color').innerText = ' No, Fuel. Engine Cutoff';
+                document.getElementById('status-color').style.backgroundColor = '#bbb';
+                document.getElementById('status-color').innerText = ' No Fuel. Engine Cutoff';
             }
 
         } else {
