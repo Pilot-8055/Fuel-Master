@@ -110,7 +110,7 @@
     let throttlePercent;
     let isOnGround;
     let aircraftName;
-    let fuelOnBoard = 100; //16000
+    let fuelOnBoard = 16000; //16000
     let throttleMultiplier = 1.3;
     let miniBoxPinned = false;
     let flightTime;
