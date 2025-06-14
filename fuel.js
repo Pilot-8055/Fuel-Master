@@ -82,7 +82,7 @@
             <span><strong>Fuel:</strong> <span id="mini-fuel-onboard">N/A</span> kg</span>
             <span style="margin-left: 20px;"><strong>Estimated Flight Time:</strong> <span id="mini-flight-time">--</span> minutes</span>
             </div>
-            <div style="padding: 7px 20px; background-color: #4f8; font-size: 15px; font-weight: 400; font-style: italic; border-radius: 10px;">
+            <div id="status-color" style="padding: 7px 20px; background-color: #afb; font-size: 15px; font-weight: 400; font-style: italic; border-radius: 10px;">
                 Have a Great Flight
             </div>
         </div></div>
@@ -92,7 +92,7 @@
         bottom: 42px; /* just above GeoFS bottom bar */
         left: 50%;
         transform: translateX(-50%);
-        background: rgba(255, 255, 255, 0.91);
+        background: rgba(255, 255, 255, 0.87);
         color: black;
         border-radius: 10px;
         z-index: 999;
@@ -110,7 +110,7 @@
     let throttlePercent;
     let isOnGround;
     let aircraftName;
-    let fuelOnBoard = 16000;
+    let fuelOnBoard = 12050; //16000
     let throttleMultiplier = 1.3;
     let miniBoxPinned = false;
     let flightTime;
@@ -316,11 +316,41 @@
             document.getElementById('mini-fuel-onboard').innerText = fuelOnBoard.toFixed(2);
             document.getElementById('mini-flight-time').innerText = flightTime;
 
+            if (fuelOnBoard >= 12000) {
+                document.getElementById('status-color').style.backgroundColor = '#afb';
+                document.getElementById('status-color').innerText = 'Have a Great Flight';
+            }
+
+            if (fuelOnBoard < 12000 && fuelOnBoard>= 8000) {
+                document.getElementById('status-color').style.backgroundColor = '#ff8';
+                document.getElementById('status-color').innerText = 'Low on Fuel. Approach Landing';
+            }
+
+            if (fuelOnBoard < 8000 && fuelOnBoard>= 4000) {
+                document.getElementById('status-color').style.backgroundColor = '#fc8';
+                document.getElementById('status-color').innerText = 'Fuel Very Low. Declare Emergency Landing';
+            }
+
+            if (fuelOnBoard < 4000 && fuelOnBoard>= 1000) {
+                document.getElementById('status-color').style.backgroundColor = '#f88';
+                document.getElementById('status-color').innerText = 'Reseves Emptying. Declare Emergency Landing';
+            }
+
+            if (fuelOnBoard < 1000 && fuelOnBoard>= 10) {
+                document.getElementById('status-color').style.backgroundColor = '#f88';
+                document.getElementById('status-color').innerText = ' Fuel Finishing. Land Immediately';
+            }
+
+            if (fuelOnBoard < 10) {
+                document.getElementById('status-color').style.backgroundColor = '#888';
+                document.getElementById('status-color').innerText = ' No, Fuel. Engine Cutoff';
+            }
+
         } else {
             fuelSectionElem.style.display = "none";
             document.getElementById('aircraft-name').innerText = 'Aircraft Type not Supported';
-	    document.getElementById('aircraft-name1').innerText = 'Aircraft Type not Supported';
-	    document.getElementById('aircraft-name2').innerText = 'Aircraft Type not Supported';
+            document.getElementById('aircraft-name1').innerText = 'Aircraft Type not Supported';
+            document.getElementById('aircraft-name2').innerText = 'Aircraft Type not Supported';
             maxfuel = 0;
             fuelOnBoard = 16000;
             document.getElementById('flight-time').innerText = 'Nul';
