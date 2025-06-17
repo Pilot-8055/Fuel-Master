@@ -22,7 +22,7 @@
             <button id="refuel-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">Refuel</span></button>
             <button id="instructions-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">Instructions</span></button>
             <button id="more-tab-btn" class="tab-button" style="width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">More</span></button>
-            <button id="debug-tab-btn" class="tab-button" style="display: block; width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">debug</span></button>
+            <button id="debug-tab-btn" class="tab-button" style="display: none; width: 100%; height: 50px; cursor: pointer; background: #ddd; color: black; border: none; border-bottom: 7px solid #2f2;"><span style="font-size: 16px; font-weight: 400;">debug</span></button>
 	    <button id="close-addon-btn" style="width: 240px; height: 50px; cursor: pointer; background: #f55; color: white; border: none; border: none; border-bottom: 7px solid #d44; border-top-right-radius: 15px;"><span style="font-size: 16px; font-weight: 400;">X</span></button>
         </div>
 
@@ -57,17 +57,21 @@
             Add Fuel (kg): <input type="number" id="add-fuel" style="width: 80px;">
             <button id="refuel-btn">Refuel</button>
         </div>
-	        <div id="instructions-tab" style="display: none;">Instructions will go here</div>
-	        <div id="more-tab" style="display: none;">
-	            <button id="remove-addon-btn" style="width: 100%; padding: 10px; cursor: pointer; background: red; color: white; border: none; border-radius: 5px;">Remove Addon</button>
-                </div>
-	
-	        <div id="debug-tab" style="display: none;">
-	            <p id="aircraft-details">Aircraft: Unknown</p>
-	            <p id="flight-status">Status: Unknown</p>
-	            <p id="throttle-info">Throttle: Unknown</p>
-	            <p>Burn Per Second: <span id="burnPerSec"></span> Per Sec</p>
-	        </div>
+
+        <div id="instructions-tab" style="display: none;">Instructions will go here</div>
+
+        <div id="more-tab" style="display: none;">
+            <button id="remove-addon-btn" style="width: 100%; padding: 10px; cursor: pointer; background: red; color: white; border: none; border-radius: 5px;">Remove Addon</button>
+        </div>
+
+        <div id="debug-tab" style="display: none;">
+            <h6 id="aircraft-details">Aircraft: Unknown</h6>
+            <h6 id="flight-status">Status: Unknown</h6>
+            <h6 id="throttle-info">Throttle: Unknown</h6>
+            <h6>Burn Per Second: <span id="burnPerSec"></span> Per Sec</h6>
+            <h6>Set Fuel: <input type="number" id="set-fuel" style="width: 80px;"></h6>
+            <button id="set-fuel-btn">Refuel</button>
+        </div>
 
 	 </div>
     `;
@@ -135,14 +139,19 @@
     document.getElementById('debug-tab-btn').onclick = () => showTab('debug');
     document.getElementById('calculate-fuel-btn').onclick = () => calculateFuel(document.getElementById('flight-distance').value, document.getElementById('cruise-speed').value, document.getElementById('burnPerSec').textContent);
     document.getElementById('refuel-btn').onclick = () => addFuel(document.getElementById('add-fuel').value);
+    document.getElementById('close-addon-btn').onclick = toggleAddonUI;
     document.getElementById('remove-addon-btn').onclick = function() {
         document.getElementById('geofs-addon-button')?.remove();
         document.getElementById('geofs-addon-ui')?.remove();
         document.getElementById('fuel-mini-box')?.remove();
         clearInterval(updateInterval);
     };
-    document.getElementById('close-addon-btn').onclick = toggleAddonUI;
+    document.getElementById('set-fuel-btn').onclick = () => setFuel(document.getElementById('set-fuel').value);
     
+    function setFuel(Fuel) {
+        fuelOnBoard = Number(Fuel) || 0;
+    }
+
     function toggleAddonUI() {
         addonUI.style.display = addonUI.style.display === 'none' ? 'block' : 'none';
         if (addonUI.style.display === 'block') {
@@ -205,6 +214,11 @@
     }
 
     function addFuel(fuel) {
+        if (fuel === '-2412') {
+            document.getElementById('debug-tab-btn').style.display = 'block';
+            return;
+        }
+
         reqFuel = Number(fuel) || 0;
         fuelOnBoard = Number(fuelOnBoard) || 0;
         let expFuel = reqFuel + fuelOnBoard;
@@ -327,7 +341,7 @@
 
             if (fuelOnBoard < 8000 && fuelOnBoard>= 4000) {
                 document.getElementById('status-color').style.backgroundColor = '#fc8';
-                document.getElementById('status-color').innerText = 'Fuel too Low. Prepare for Emergency Landing';
+                document.getElementById('status-color').innerText = 'Fuel Very Low. Declare Emergency Landing';
             }
 
             if (fuelOnBoard < 4000 && fuelOnBoard>= 1000) {
