@@ -1,7 +1,7 @@
 # Fuel-Master
 
 Fuel Master is a fuel management addon for GeoFS that adds a layer of realism to your flights.  
-It’s designed to be used with the **bookmarklet method only** — be sure to follow the steps below to get started smoothly.
+It’s designed to be used with the **bookmarklet method** — be sure to follow the steps below to get started smoothly.
 
 
 ## What Is Fuel Master?
@@ -30,7 +30,7 @@ Getting started is simple:
 4. Keep an eye on the **HUD Bar**, which gives you a live readout of your fuel level mid-flight.
 5. Explore tabs like **Details**, **Instructions**, and **More** for deeper control and features.
 6. Want the HUD to stay up? Pin it, and it won’t disappear even if you toggle the main panel.
-7. Done flying? Use the **Remove Addon** button in the **More** tab to cleanly disable everything.
+7. There is an Instructions Page in the Addon itself for further Guide.
 
 
 ## Key Features
