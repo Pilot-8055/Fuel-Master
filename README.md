@@ -1,11 +1,11 @@
-# ✈️ FUEL MASTER
+# FUEL MASTER
 
 Fuel Master is a fuel management addon for GeoFS that adds a layer of realism to your flights.  
 It’s designed to be used with the **bookmarklet method only** — be sure to follow the steps below to get started smoothly.
 
 ---
 
-## 🛩️ What Is Fuel Master?
+## What Is Fuel Master?
 
 **Fuel Master** helps bring your virtual flights closer to reality.  
 It handles everything from planning your fuel load based on distance and speed, to monitoring real-time fuel burn during the flight — all from inside a sleek, easy-to-use cockpit panel. Whether you're flying short hops or long hauls, it's your go-to fuel buddy.
