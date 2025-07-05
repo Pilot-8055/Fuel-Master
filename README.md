@@ -19,7 +19,7 @@ Getting started is simple:
 3. Paste the script into the **URL** field of that bookmark.
 4. Open [GeoFS](https://geo-fs.com) in your browser.
 5. After your aircraft and scenery are fully loaded, click the bookmark.
-6. You'll see **FUEL MASTER** appear just above the bottom toolbar. Then, you're ready to fly.
+6. You'll see a button for **FUEL MASTER** appear inside the bottom toolbar. Click it. Then, you're ready to fly.
 
 
 ## How to Use It
