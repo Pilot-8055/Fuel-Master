@@ -14,7 +14,7 @@ It handles everything from planning your fuel load based on distance and speed, 
 
 Getting started is simple:
 
-1. Copy the full Fuel Master script.
+1. Copy the full Bookmarklet script.
 2. Create a new bookmark in your browser.
 3. Paste the script into the **URL** field of that bookmark.
 4. Open [GeoFS](https://geo-fs.com) in your browser.
