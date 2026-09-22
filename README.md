@@ -41,3 +41,4 @@ Getting started is simple:
 - Refueling allowed only while on the ground.
 - Clean UI with live aircraft detection and data.
 - Compact HUD Bar for quick views.
+- Dark Mode for night flights.
